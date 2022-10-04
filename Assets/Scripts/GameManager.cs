@@ -4,7 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    
+    [Header("Spawn speed")]
+    [SerializeField] float _maxSpawnSpeed = 5f;
+    [SerializeField] float _minSpawnSpeed = 2f;
+    [SerializeField] float _speedDecreasingStep = 0.5f;
+
+    [Header("Enemy settings")]
+    [SerializeField] GameObject _blueEnemy;
+    [SerializeField] GameObject _redEnemy;
+    [SerializeField] int _startBlueEmount = 1;
+    [SerializeField] int _blueAmountStep = 1;
+
+
     Player player;
 
     void Start()

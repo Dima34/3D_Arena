@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
     public void ApplyStrenghtChanges(float changePoints){
         strength -= changePoints;
         strength = Mathf.Clamp(strength, 0, _maxStrength);
+
+        Debug.Log("Strength applied " + strength);
     }
 
        
