@@ -104,4 +104,10 @@ public class Spawner : MonoBehaviour
             blueEnemiesList.Remove(enemy.GetComponent<BlueEnemy>());
         }
     }
+
+    private void OnDestroy()
+    {
+        GlobalEventManager.OnEnemyDeath.RemoveListener(OnEmenyDeath);
+
+    }
 }

@@ -67,6 +67,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void lockCoursor(){
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void OnDestroy()
+    {
+        playerIpnutActions.Player.CameraMovement.performed -= handlePlayerRotate;
+
     }
 }

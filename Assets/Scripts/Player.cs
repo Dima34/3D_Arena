@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
 
 public class Player : MonoBehaviour
 {
@@ -12,6 +15,7 @@ public class Player : MonoBehaviour
     [Header("Strenght")]
     [SerializeField] float _initialHealth = 100f;
     [SerializeField] float _initialStrength = 50f;
+
     
     public float Health{
         get{ return health;}
@@ -38,19 +42,26 @@ public class Player : MonoBehaviour
         // Check if initial > max
         health = Mathf.Clamp(_initialHealth, 0, _maxHealth);
         strength = Mathf.Clamp(_initialStrength, 0, _maxStrength);
+
+        GlobalEventManager.OnPlayerInit.Fire(health, _maxHealth, strength, _maxStrength);
     }
 
     public void ApplyHealthChanges(float changePoints){
         health -= changePoints;
         health = Mathf.Clamp(health, 0, _maxHealth);
+        GlobalEventManager.OnHealthChange.Fire(health, _maxHealth);
+        checkHealth();
+    }
+
+    void checkHealth()
+    {
+        if (health == 0)
+            GlobalEventManager.OnEndgame.Fire();
     }
 
     public void ApplyStrenghtChanges(float changePoints){
         strength -= changePoints;
         strength = Mathf.Clamp(strength, 0, _maxStrength);
-
-        Debug.Log("Strength applied " + strength);
+        GlobalEventManager.OnStrenghtChange.Fire(strength, _maxStrength);
     }
-
-       
 }

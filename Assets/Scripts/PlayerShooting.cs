@@ -39,4 +39,9 @@ public class PlayerShooting : MonoBehaviour
         yield return new WaitForSeconds(100 / _fireRate);
         shootProcess = null;
     }
+
+    private void OnDestroy()
+    {
+        playerInputActions.Player.Fire.performed -= shoot;
+    }
 }

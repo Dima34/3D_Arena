@@ -57,4 +57,126 @@ public static class GlobalEventManager
             listenerList?.Invoke();
         }
     }
+
+    public static class OnHealthChange
+    {
+        static Action<float, float> listenerList;
+
+        public static void AddListener(Action<float, float> listener)
+        {
+            listenerList += listener;
+        }
+
+        public static void RemoveListener(Action<float, float> listener)
+        {
+            listenerList -= listener;
+        }
+
+        public static void Fire(float currentHealth, float maxHealth)
+        {
+            listenerList?.Invoke(currentHealth, maxHealth);
+        }
+    }
+
+    public static class OnPlayerInit
+    {
+        static Action<float, float, float, float> listenerList;
+
+        public static void AddListener(Action<float, float, float, float> listener)
+        {
+            listenerList += listener;
+        }
+
+        public static void RemoveListener(Action<float, float, float, float> listener)
+        {
+            listenerList -= listener;
+        }
+
+        public static void Fire(float currentHealth, float maxHealth, float currentStrength, float maxStrength)
+        {
+            listenerList?.Invoke(currentHealth, maxHealth, currentStrength, maxStrength);
+        }
+    }
+
+
+
+    public static class OnStrenghtChange
+    {
+        static Action<float, float> listenerList;
+
+        public static void AddListener(Action<float, float> listener)
+        {
+            listenerList += listener;
+        }
+
+        public static void RemoveListener(Action<float, float> listener)
+        {
+            listenerList -= listener;
+        }
+
+        public static void Fire(float currentStrength, float maxStrength)
+        {
+            listenerList?.Invoke(currentStrength, maxStrength);
+        }
+    }
+
+    public static class OnScoreChange
+    {
+        static Action<int> listenerList;
+
+        public static void AddListener(Action<int> listener)
+        {
+            listenerList += listener;
+        }
+
+        public static void RemoveListener(Action<int> listener)
+        {
+            listenerList -= listener;
+        }
+
+        public static void Fire(int score)
+        {
+            listenerList?.Invoke(score);
+        }
+    }
+
+    public static class OnScoreInit
+    {
+        static Action<int> listenerList;
+
+        public static void AddListener(Action<int> listener)
+        {
+            listenerList += listener;
+        }
+
+        public static void RemoveListener(Action<int> listener)
+        {
+            listenerList -= listener;
+        }
+
+        public static void Fire(int score)
+        {
+            listenerList?.Invoke(score);
+        }
+    }
+
+    public static class OnEndgame
+    {
+        static Action listenerList;
+
+        public static void AddListener(Action listener)
+        {
+            listenerList += listener;
+        }
+
+        public static void RemoveListener(Action listener)
+        {
+            listenerList -= listener;
+        }
+
+        public static void Fire()
+        {
+            listenerList?.Invoke();
+        }
+    }
 }
