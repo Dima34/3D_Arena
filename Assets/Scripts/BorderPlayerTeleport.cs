@@ -19,19 +19,13 @@ public class BorderPlayerTeleport : MonoBehaviour
         {
             List<Vector3> enemiesPositions = new List<Vector3>();
 
-            List<RedEnemy> redEnemiesList = enemySpawner.RedEnemiesList;
-            List<BlueEnemy> blueEnemiesList = enemySpawner.BlueEnemiesList;
+            List<Enemy> enemiesList = enemySpawner.EnemiesList;
+            
 
             // Get all enemy positions
-            foreach (var enemy in redEnemiesList)
+            foreach (var enemy in enemiesList)
             {
                 if(enemy != null)
-                    enemiesPositions.Add(enemy.transform.position);
-            }
-
-            foreach (var enemy in blueEnemiesList)
-            {
-                if (enemy != null)
                     enemiesPositions.Add(enemy.transform.position);
             }
 
@@ -40,7 +34,7 @@ public class BorderPlayerTeleport : MonoBehaviour
             float avarageX = 0;
             float avarageZ = 0;
 
-            if (redEnemiesList.Count != 0 && blueEnemiesList.Count != 0)
+            if (enemiesList.Count != 0)
             {
                 foreach (var position in enemiesPositions)
                 {

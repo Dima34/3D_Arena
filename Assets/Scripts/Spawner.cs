@@ -5,9 +5,7 @@ using UnityEngine.AI;
 
 public class Spawner : MonoBehaviour
 {
-    public List<BlueEnemy> BlueEnemiesList { get => blueEnemiesList; set => blueEnemiesList = value; }
-    public List<RedEnemy> RedEnemiesList { get => redEnemiesList; set => redEnemiesList = value; }
-
+    public List<Enemy> EnemiesList { get => enemiesList; }
     [Header("Spawn settings")]
     [SerializeField] float _maxSpawnSpeed = 2f;
     [SerializeField] float _minSpawnSpeed = 5f;
@@ -23,8 +21,10 @@ public class Spawner : MonoBehaviour
     [SerializeField] int _blueAmountStep = 1;
 
     Player player;
-    List<BlueEnemy> blueEnemiesList;
-    List<RedEnemy> redEnemiesList;
+    List<Enemy> enemiesList;
+    float currentRedAmount = 0;
+    float currentBlueAmount = 0;
+
 
     void Start()
     {
@@ -37,8 +37,8 @@ public class Spawner : MonoBehaviour
     {
         float currentSpawnSpeed = _minSpawnSpeed;
         float blueAmount = _startBlueEmount;
-        blueEnemiesList = new List<BlueEnemy>();
-        redEnemiesList = new List<RedEnemy>();
+
+        enemiesList = new List<Enemy>();
 
         while (true)
         {
@@ -56,21 +56,27 @@ public class Spawner : MonoBehaviour
             Vector3 spawnPoint;
             while (!RandomMeshPoint(player.transform.position, _enemySpawnRadius, out spawnPoint)) ;
 
-            float neededRedAmount = blueEnemiesList.Count * 4;
-            float availableRedAmount = neededRedAmount - redEnemiesList.Count;
+            float neededRedAmount = currentBlueAmount * 4;
+            float availableRedAmount = neededRedAmount - currentRedAmount;
 
-            if (blueAmount > blueEnemiesList.Count && availableRedAmount <= 0)
+            if (blueAmount > currentBlueAmount && availableRedAmount <= 0)
             {
-                BlueEnemy enemy = Instantiate(_blueEnemy, spawnPoint, new Quaternion(0, 0, 0, 0));
-                blueEnemiesList.Add(enemy);
+                spawnEnemy(_blueEnemy, spawnPoint);
+                currentBlueAmount++;
             }
             else if (availableRedAmount > 0)
             {
                 spawnPoint.y = _redEnemyYSpawnPoint; // To spawn red on the "second floor"
-                RedEnemy redEnemy = Instantiate(_redEnemy, spawnPoint, new Quaternion(0, 0, 0, 0));
-                redEnemiesList.Add(redEnemy);
+                spawnEnemy(_redEnemy, spawnPoint);
+                currentRedAmount++;
             }
         }
+    }
+
+    void spawnEnemy(Enemy enemy, Vector3 spawnPoint)
+    {
+        Enemy spawnedEnemy = Instantiate(enemy, spawnPoint, new Quaternion());
+        enemiesList.Add(spawnedEnemy);
     }
 
     bool RandomMeshPoint(Vector3 center, float range, out Vector3 result)
@@ -89,15 +95,16 @@ public class Spawner : MonoBehaviour
 
     public void OnEmenyDeath(Enemy enemy, float reward)
     {
-
         if (enemy.GetComponent<RedEnemy>())
         {
-            redEnemiesList.Remove(enemy.GetComponent<RedEnemy>());
+            currentRedAmount--;
         }
         else
         {
-            blueEnemiesList.Remove(enemy.GetComponent<BlueEnemy>());
+            currentBlueAmount--;
         }
+
+        enemiesList.Remove(enemy);
     }
 
     private void OnDestroy()

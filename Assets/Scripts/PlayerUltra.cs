@@ -32,7 +32,7 @@ public class PlayerUltra : MonoBehaviour
             UseUltra();
         }
 
-        Debug.Log("Enemy amount " + _spawner.BlueEnemiesList.Count + _spawner.RedEnemiesList.Count);
+        Debug.Log("Enemy amount " + _spawner.EnemiesList.Count);
     }
 
     void setUltra(bool state)
@@ -45,23 +45,12 @@ public class PlayerUltra : MonoBehaviour
     {
         if (isUltraReady)
         {
-            for(int i = 0; i < _spawner.BlueEnemiesList.Count; i++)
+            for(int i = 0; i < _spawner.EnemiesList.Count; i++)
             {
-                if (_spawner.BlueEnemiesList[i] != null)
+                if (_spawner.EnemiesList[i] != null)
                 {
-                    Enemy enemyScript = _spawner.BlueEnemiesList[i].GetComponent<Enemy>();
-                    GlobalEventManager.OnEnemyDeath.Fire(enemyScript, enemyScript.StrengthReward);
-                    DestroyObject(enemyScript.gameObject);
-                }
-            }
-
-            for (int i = 0; i < _spawner.RedEnemiesList.Count; i++)
-            {
-                if (_spawner.RedEnemiesList[i] != null)
-                {
-                    Enemy enemyScript = _spawner.RedEnemiesList[i].GetComponent<Enemy>();
-                    GlobalEventManager.OnEnemyDeath.Fire(enemyScript, enemyScript.StrengthReward);
-                    DestroyObject(enemyScript.gameObject);
+                    GlobalEventManager.OnEnemyDeath.Fire(_spawner.EnemiesList[i], _spawner.EnemiesList[i].StrengthReward);
+                    DestroyObject(_spawner.EnemiesList[i].gameObject);
                 }
             }
 
