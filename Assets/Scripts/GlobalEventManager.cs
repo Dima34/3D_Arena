@@ -7,18 +7,18 @@ using System;
 public static class GlobalEventManager
 {
     public static class OnEnemyDeath{
-        static Action<float> listenerList;
+        static Action<Enemy, float> listenerList;
 
-        public static void AddListener(Action<float> listener){
+        public static void AddListener(Action<Enemy, float> listener){
             listenerList += listener;
         }
 
-        public static void RemoveListener(Action<float> listener){
+        public static void RemoveListener(Action<Enemy, float> listener){
             listenerList -= listener;
         }
 
-        public static void Fire(float strengthAmount){
-            listenerList?.Invoke(strengthAmount);
+        public static void Fire(Enemy enemy, float strengthAmount){
+            listenerList?.Invoke(enemy, strengthAmount);
         }
     }
     

@@ -81,7 +81,6 @@ public class RedEnemy : MonoBehaviour
             agent.SetDestination(WalkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - WalkPoint;
-        Debug.Log(distanceToWalkPoint.magnitude);
         
         Debug.DrawLine(transform.position, WalkPoint);
         // WalkPoint reched
@@ -116,7 +115,6 @@ public class RedEnemy : MonoBehaviour
             agent.SetDestination(transform.position);
             agent.enabled = false;
             objectFollower.StartMoving(player.transform);
-            //attackProcess = StartCoroutine(Attack());
         }
     }
 

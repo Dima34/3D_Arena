@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
 
     void checkHealth(){
         if(health <= 0){
-            GlobalEventManager.OnEnemyDeath.Fire(_strengthReward);
+            GlobalEventManager.OnEnemyDeath.Fire(this, _strengthReward);
             DestroyObject(gameObject);
         }
     }
