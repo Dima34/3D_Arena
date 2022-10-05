@@ -56,8 +56,6 @@ public class Spawner : MonoBehaviour
             Vector3 spawnPoint;
             while (!RandomMeshPoint(player.transform.position, _enemySpawnRadius, out spawnPoint)) ;
 
-            Debug.DrawLine(player.transform.position, spawnPoint, Color.red, 2f);
-
             float neededRedAmount = blueEnemiesList.Count * 4;
             float availableRedAmount = neededRedAmount - redEnemiesList.Count;
 
@@ -105,6 +103,5 @@ public class Spawner : MonoBehaviour
     private void OnDestroy()
     {
         GlobalEventManager.OnEnemyDeath.RemoveListener(OnEmenyDeath);
-
     }
 }

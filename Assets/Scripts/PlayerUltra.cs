@@ -31,6 +31,8 @@ public class PlayerUltra : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)){
             UseUltra();
         }
+
+        Debug.Log("Enemy amount " + _spawner.BlueEnemiesList.Count + _spawner.RedEnemiesList.Count);
     }
 
     void setUltra(bool state)
@@ -53,8 +55,6 @@ public class PlayerUltra : MonoBehaviour
                 }
             }
 
-            _spawner.BlueEnemiesList = new List<BlueEnemy>();
-
             for (int i = 0; i < _spawner.RedEnemiesList.Count; i++)
             {
                 if (_spawner.RedEnemiesList[i] != null)
@@ -65,7 +65,6 @@ public class PlayerUltra : MonoBehaviour
                 }
             }
 
-            _spawner.RedEnemiesList = new List<RedEnemy>();
             player.ApplyStrenghtChanges(player.MaxStrenght);
 
             setUltra(false);

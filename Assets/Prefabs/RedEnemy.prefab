@@ -162,8 +162,8 @@ MonoBehaviour:
   WalkPointRange: 20
   _sightRange: 2.2
   _attackRange: 0.8
-  _maxHealth: 100
-  _strengthReward: 50
+  _maxHealth: 50
+  _strengthReward: 15
   _hitDamage: 15
   _flyUpSpeed: 3
   _flyUpDistance: 2
