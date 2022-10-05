@@ -8,13 +8,16 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        string tag = other.tag;
-        if(tag == "Player")
+        if (other.tag == "Player")
         {
             Player player = other.gameObject.GetComponent<Player>();
             player.ApplyStrenghtChanges(strengthDamage);
+
+            DestroyObject(gameObject);
         }
-        
-        DestroyObject(gameObject);
+        else if (other.tag == "PlayerShell")
+        {
+            DestroyObject(gameObject);
+        }
     }
 }

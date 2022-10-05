@@ -55,11 +55,13 @@ public class BombShell : MonoBehaviour
     {
         string tag = other.tag;
 
+        if (tag == "TeleportZone") return;
         if (tag != "Enemy")
         {
             DestroyObject(gameObject);
             return;
         }
+
 
         handleDamage(other);
     }

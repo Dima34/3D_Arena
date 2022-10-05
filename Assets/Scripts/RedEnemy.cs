@@ -46,6 +46,7 @@ public class RedEnemy : MonoBehaviour
             playerInAttackRange = Physics.CheckSphere(transform.position, _attackRange, WhatIsPlayer);
 
             RaycastHit forwardObstacleHit = obstacleInWay(transform.position - player.transform.position, _attackRange);
+            Debug.Log(forwardObstacleHit.distance);
 
             if (forwardObstacleHit.distance <= _sightRange && forwardObstacleHit.collider.tag == "Player")
             {

@@ -37,4 +37,24 @@ public static class GlobalEventManager
             listenerList?.Invoke();
         }
     }
+
+    public static class OnOppositeCornerMove
+    {
+        static Action listenerList;
+
+        public static void AddListener(Action listener)
+        {
+            listenerList += listener;
+        }
+
+        public static void RemoveListener(Action listener)
+        {
+            listenerList -= listener;
+        }
+
+        public static void Fire()
+        {
+            listenerList?.Invoke();
+        }
+    }
 }
