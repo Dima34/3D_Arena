@@ -9,25 +9,18 @@ using UnityEngine.Serialization;
 public class BlueEnemy : MonoBehaviour
 {
     [SerializeField] ObjectFollower _enemyBulletObject;
-    NavMeshAgent agent;
-
-    Transform player;
     public LayerMask WhatIsGround, WhatIsPlayer;
-    
-
-    // patroling
     public Vector3 walkPoint;
-    bool walkPointSet;
     public float walkPointRange;
-
-
-    // attacking
     public float timeBetweenAttacks;
-    bool alreadyAttacked;
-
-    // states
-    [SerializeField] float _sightRange, _attackRange;
     public bool playerInSightRange, playerInAttackRange;
+    
+    [SerializeField] float _sightRange, _attackRange;
+
+    NavMeshAgent agent;
+    Transform player;
+    bool walkPointSet;
+    bool alreadyAttacked;
 
 
     private void Awake() {
