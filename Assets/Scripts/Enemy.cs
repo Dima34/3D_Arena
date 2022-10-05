@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Services.Analytics.Internal;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
 
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -128,6 +124,5 @@ public abstract class Enemy : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, _attackRange);
-
     }
 }
