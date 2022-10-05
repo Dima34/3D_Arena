@@ -51,7 +51,6 @@ public class Spawner : MonoBehaviour
             else
             {
                 blueAmount += _blueAmountStep;
-                Debug.Log("Blue increased. Now " + blueAmount);
             };
 
             Vector3 spawnPoint;
@@ -73,8 +72,6 @@ public class Spawner : MonoBehaviour
                 RedEnemy redEnemy = Instantiate(_redEnemy, spawnPoint, new Quaternion(0, 0, 0, 0));
                 redEnemiesList.Add(redEnemy);
             }
-
-            Debug.Log("available red - " + availableRedAmount);
         }
     }
 

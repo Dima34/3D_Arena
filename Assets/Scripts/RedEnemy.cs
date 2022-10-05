@@ -13,7 +13,7 @@ public class RedEnemy : Enemy
     Coroutine attackProcess;
     float startBaseOffset;
 
-    void Start()
+    protected override void Start()
     {
         base.Start();
 
@@ -23,10 +23,17 @@ public class RedEnemy : Enemy
         StartCoroutine(flyUp());
     }
 
+    protected override void FixedUpdate()
+    {
+        if (agent.enabled && isFliedUp)
+        {
+            base.FixedUpdate();
+        }
+    }
 
     override protected void attackPlayer()
     {
-        if(attackProcess == null)
+        if (attackProcess == null)
         {
             // stop the enemy
             agent.SetDestination(transform.position);

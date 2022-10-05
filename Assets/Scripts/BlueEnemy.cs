@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 public class BlueEnemy : Enemy
 {
@@ -12,6 +9,7 @@ public class BlueEnemy : Enemy
     [SerializeField] ObjectFollower _enemyBulletObject;
     
     bool alreadyAttacked;
+
 
     override protected void attackPlayer()
     {

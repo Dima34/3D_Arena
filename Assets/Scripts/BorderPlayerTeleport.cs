@@ -65,6 +65,7 @@ public class BorderPlayerTeleport : MonoBehaviour
 
             GlobalEventManager.OnOppositeCornerMove.Fire();
             player.transform.position = oppositeCorner;
+            player.transform.LookAt(transform, player.transform.up);
         }        
     }
 }

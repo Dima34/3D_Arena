@@ -29,37 +29,35 @@ public abstract class Enemy : MonoBehaviour
     public float MaxHealth { get => _maxHealth; }
 
     // Start is called before the first frame update
-    protected void Start()
+    protected virtual void Start()
     {
         health = _maxHealth;
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
-        if (agent.enabled && isFliedUp)
+
+        playerInSightRange = Physics.CheckSphere(transform.position, _sightRange, WhatIsPlayer);
+        playerInAttackRange = Physics.CheckSphere(transform.position, _attackRange, WhatIsPlayer);
+
+        RaycastHit forwardObstacleHit = obstacleInWay(transform.position - player.transform.position, _attackRange);
+
+        if (forwardObstacleHit.distance <= _sightRange && forwardObstacleHit.collider.tag == "Player")
         {
-            playerInSightRange = Physics.CheckSphere(transform.position, _sightRange, WhatIsPlayer);
-            playerInAttackRange = Physics.CheckSphere(transform.position, _attackRange, WhatIsPlayer);
-
-            RaycastHit forwardObstacleHit = obstacleInWay(transform.position - player.transform.position, _attackRange);
-
-            if (forwardObstacleHit.distance <= _sightRange && forwardObstacleHit.collider.tag == "Player")
+            if (playerInAttackRange)
             {
-                if (playerInAttackRange)
-                {
-                    attackPlayer();
-                }
-                else if (playerInSightRange)
-                {
-                    chasePlayer();
-                }
+                attackPlayer();
             }
-            else
+            else if (playerInSightRange)
             {
-                patroling();
+                chasePlayer();
             }
+        }
+        else
+        {
+            patroling();
         }
     }
 
@@ -107,14 +105,17 @@ public abstract class Enemy : MonoBehaviour
         agent.SetDestination(player.position);
     }
 
-    public void ApplyHealthChanges(float points, out float remainHealth){
+    public void ApplyHealthChanges(float points, out float remainHealth)
+    {
         health += points;
         remainHealth = health;
         checkHealth();
     }
 
-    void checkHealth(){
-        if(health <= 0){
+    void checkHealth()
+    {
+        if (health <= 0)
+        {
             GlobalEventManager.OnEnemyDeath.Fire(this, _strengthReward);
             DestroyObject(gameObject);
         }
