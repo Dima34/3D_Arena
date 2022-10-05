@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6839995877156282562}
   - component: {fileID: 6839995877156282563}
   - component: {fileID: 739283755}
-  - component: {fileID: 6839995877156282564}
   - component: {fileID: 6839995877156282574}
   - component: {fileID: 6839995877156282575}
   - component: {fileID: 6839995877156282573}
@@ -119,20 +118,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6839995877156282564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6839995877156282565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dd98ad7dbc38d849bae16beedc90d66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxHealth: 50
-  _strengthReward: 15
 --- !u!195 &6839995877156282574
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -175,9 +160,11 @@ MonoBehaviour:
     m_Bits: 128
   WalkPoint: {x: 0, y: 0, z: 0}
   WalkPointRange: 20
-  _hitDamage: 15
   _sightRange: 2.2
   _attackRange: 0.8
+  _maxHealth: 100
+  _strengthReward: 50
+  _hitDamage: 15
   _flyUpSpeed: 3
   _flyUpDistance: 2
 --- !u!114 &6839995877156282573

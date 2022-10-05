@@ -5,97 +5,17 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
-[RequireComponent(typeof(NavMeshAgent))]
-public class BlueEnemy : MonoBehaviour
+public class BlueEnemy : Enemy
 {
-    [SerializeField] ObjectFollower _enemyBulletObject;
-    public LayerMask WhatIsGround, WhatIsPlayer;
-    public Vector3 walkPoint;
-    public float walkPointRange;
     public float timeBetweenAttacks;
-    public bool playerInSightRange, playerInAttackRange;
-    
-    [SerializeField] float _sightRange, _attackRange;
 
-    NavMeshAgent agent;
-    Transform player;
-    bool walkPointSet;
+    [SerializeField] ObjectFollower _enemyBulletObject;
+    
     bool alreadyAttacked;
 
-
-    private void Awake() {
-        player = GameObject.Find("Player").transform;
-        agent = GetComponent<NavMeshAgent>();
-    }
-
-    private void FixedUpdate()
+    override protected void attackPlayer()
     {
-        playerInSightRange = Physics.CheckSphere(transform.position, _sightRange, WhatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, _attackRange, WhatIsPlayer);
-
-        RaycastHit forwardObstacleHit = obstacleInWay(transform.position - player.position, _attackRange);
-
-        if (forwardObstacleHit.distance <= _sightRange && forwardObstacleHit.collider.tag == "Player")
-        {
-            if (playerInAttackRange)
-            {
-                attackPlayer();
-            }
-            else if (playerInSightRange)
-            {
-                chasePlayer();
-            }
-        }
-        else
-        {
-            patroling();
-        }
-    }
-
-    RaycastHit obstacleInWay(Vector3 vector, float rayLenght)
-    {
-        RaycastHit hit;
-        Physics.Raycast(transform.position, -vector.normalized, out hit);
-
-        return hit;
-    }
-
-    void patroling()
-    {
-        if (!walkPointSet) searchWalkPoint();
-
-        if (walkPointSet)
-            agent.SetDestination(walkPoint);
-
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        // walkpoint reched
-        if (distanceToWalkPoint.magnitude < 1f)
-        {
-            walkPointSet = false;
-        }
-    }
-
-    void searchWalkPoint()
-    {
-        float randomZ  = Random.Range(-walkPointRange, walkPointRange);
-        float randomX  = Random.Range(-walkPointRange, walkPointRange);
-
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-        // is that point on the ground
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, WhatIsGround))
-            walkPointSet = true;
-    }
-
-    void chasePlayer()
-    {
-        agent.SetDestination(player.position);
-    }
-
-    void attackPlayer()
-    {
-        walkPoint = player.position;
+        WalkPoint = player.position;
 
         // stop the enemy
         agent.SetDestination(transform.position);
@@ -122,16 +42,5 @@ public class BlueEnemy : MonoBehaviour
         ObjectFollower bullet = Instantiate(_enemyBulletObject, spawnPos, transform.rotation);
         bullet.StartMoving(player);
     }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, _sightRange);
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _attackRange);
-
-    }
-
     
 }
