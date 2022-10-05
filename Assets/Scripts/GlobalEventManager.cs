@@ -6,7 +6,8 @@ using System;
 
 public static class GlobalEventManager
 {
-    public static class OnEnemyDeath{
+    public static class OnRewardedEnemyDeath
+    {
         static Action<Enemy, float> listenerList;
 
         public static void AddListener(Action<Enemy, float> listener){
@@ -18,10 +19,31 @@ public static class GlobalEventManager
         }
 
         public static void Fire(Enemy enemy, float strengthAmount){
+            OnEnemyDeath.Fire(enemy);
             listenerList?.Invoke(enemy, strengthAmount);
         }
     }
     
+    public static class OnEnemyDeath
+    {
+        static Action<Enemy> listenerList;
+
+        public static void AddListener(Action<Enemy> listener)
+        {
+            listenerList += listener;
+        }
+
+        public static void RemoveListener(Action<Enemy> listener)
+        {
+            listenerList -= listener;
+        }
+
+        public static void Fire(Enemy enemy)
+        {
+            listenerList?.Invoke(enemy);
+        }
+    }
+
     public static class OnExtraDeath{
         static Action listenerList;
 

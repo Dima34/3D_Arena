@@ -60,6 +60,7 @@ public class RedEnemy : Enemy
         if (tag == "Player")
         {
             player.GetComponent<Player>().ApplyHealthChanges(_hitDamage);
+            GlobalEventManager.OnEnemyDeath.Fire(this);
             DestroyObject(gameObject);
         }
     }

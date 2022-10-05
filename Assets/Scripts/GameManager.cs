@@ -25,12 +25,12 @@ public class GameManager : MonoBehaviour
     }
 
     public void SubscribeListeners() {
-        GlobalEventManager.OnEnemyDeath.AddListener(OnEmenyDeath);
+        GlobalEventManager.OnRewardedEnemyDeath.AddListener(OnRewardedEnemyDeath);
         GlobalEventManager.OnExtraDeath.AddListener(OnExtraDeath);
         GlobalEventManager.OnEndgame.AddListener(PauseGame);
     }
     
-    public void OnEmenyDeath(Enemy enemy, float reward){
+    public void OnRewardedEnemyDeath(Enemy enemy, float reward){
         player.ApplyStrenghtChanges(-reward);
         score++;
         GlobalEventManager.OnScoreChange.Fire(score);
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        GlobalEventManager.OnEnemyDeath.RemoveListener(OnEmenyDeath);
+        GlobalEventManager.OnRewardedEnemyDeath.RemoveListener(OnRewardedEnemyDeath);
         GlobalEventManager.OnExtraDeath.RemoveListener(OnExtraDeath);
         GlobalEventManager.OnEndgame.RemoveListener(PauseGame);
     }

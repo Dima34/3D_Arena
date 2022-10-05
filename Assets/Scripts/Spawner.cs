@@ -93,7 +93,7 @@ public class Spawner : MonoBehaviour
         return false;
     }
 
-    public void OnEmenyDeath(Enemy enemy, float reward)
+    public void OnEmenyDeath(Enemy enemy)
     {
         if (enemy.GetComponent<RedEnemy>())
         {

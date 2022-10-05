@@ -31,8 +31,6 @@ public class PlayerUltra : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)){
             UseUltra();
         }
-
-        Debug.Log("Enemy amount " + _spawner.EnemiesList.Count);
     }
 
     void setUltra(bool state)
@@ -49,7 +47,7 @@ public class PlayerUltra : MonoBehaviour
             {
                 if (_spawner.EnemiesList[i] != null)
                 {
-                    GlobalEventManager.OnEnemyDeath.Fire(_spawner.EnemiesList[i], _spawner.EnemiesList[i].StrengthReward);
+                    GlobalEventManager.OnRewardedEnemyDeath.Fire(_spawner.EnemiesList[i], _spawner.EnemiesList[i].StrengthReward);
                     DestroyObject(_spawner.EnemiesList[i].gameObject);
                 }
             }
