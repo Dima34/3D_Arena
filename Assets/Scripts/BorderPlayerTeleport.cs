@@ -35,8 +35,6 @@ public class BorderPlayerTeleport : MonoBehaviour
                     enemiesPositions.Add(enemy.transform.position);
             }
 
-            Debug.Log("enemy amount - " + enemiesPositions.Count);
-
             // Calculate the avarage position value
             Vector3 avaregeEnemyPos;
             float avarageX = 0;

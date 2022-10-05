@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -10,21 +9,21 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] float _shellSpeed = 10f;
 
     
-    PlayerInputActions playerInputActions;
     Coroutine shootProcess;
 
     private void Start() {
-        initInput();
         _shellSpeed /= 10;
     }
 
-    void initInput(){
-        playerInputActions = new PlayerInputActions();
-        playerInputActions.Player.Enable();
-        playerInputActions.Player.Fire.performed += shoot;
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            shoot();
+        }
     }
 
-    void shoot(InputAction.CallbackContext context){
+    void shoot(){
         if(shootProcess == null)
             shootProcess = StartCoroutine(shootSequence());
     }
@@ -40,8 +39,4 @@ public class PlayerShooting : MonoBehaviour
         shootProcess = null;
     }
 
-    private void OnDestroy()
-    {
-        playerInputActions.Player.Fire.performed -= shoot;
-    }
 }

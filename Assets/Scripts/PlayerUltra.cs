@@ -26,6 +26,13 @@ public class PlayerUltra : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)){
+            UseUltra();
+        }
+    }
+
     void setUltra(bool state)
     {
         isUltraReady = state;

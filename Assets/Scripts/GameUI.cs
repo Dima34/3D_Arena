@@ -29,6 +29,15 @@ public class GameUI : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)){
+            OpenPause();
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
+
     void initPlayerValues(float health, float maxHealth, float strength, float maxStrength)
     {
         setHP(health, maxHealth);
