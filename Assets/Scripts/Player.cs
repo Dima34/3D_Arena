@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     }
 
     public float Strenght{
-        get{ return health;}
+        get{ return strength;}
     }
 
     public float MaxStrenght{

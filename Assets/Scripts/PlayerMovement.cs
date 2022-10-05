@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void lockCoursor(){
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void OnDestroy()

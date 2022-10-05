@@ -14,6 +14,7 @@ public class GameUI : MonoBehaviour
 
     [SerializeField] GameObject _pauseScreen;
     [SerializeField] GameObject _endgameScreen;
+    [SerializeField] GameObject _ultraButton;
 
 
     private void OnEnable()
@@ -24,6 +25,8 @@ public class GameUI : MonoBehaviour
         GlobalEventManager.OnEndgame.AddListener(activateEndgameScreen);
         GlobalEventManager.OnPlayerInit.AddListener(initPlayerValues);
         GlobalEventManager.OnScoreInit.AddListener(initScore);
+        GlobalEventManager.OnUltraStateChanged.AddListener(toggleUltraButton);
+
     }
 
     void initPlayerValues(float health, float maxHealth, float strength, float maxStrength)
@@ -89,6 +92,18 @@ public class GameUI : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    void toggleUltraButton(bool ultraState)
+    {
+        if (ultraState)
+        {
+            _ultraButton.active = true;
+        }
+        else
+        {
+            _ultraButton.active = false;
+        }
+    }
+
     private void OnDestroy()
     {
         GlobalEventManager.OnScoreChange.RemoveListener(setKills);
@@ -97,5 +112,7 @@ public class GameUI : MonoBehaviour
         GlobalEventManager.OnEndgame.RemoveListener(activateEndgameScreen);
         GlobalEventManager.OnPlayerInit.RemoveListener(initPlayerValues);
         GlobalEventManager.OnScoreInit.RemoveListener(initScore);
+        GlobalEventManager.OnUltraStateChanged.RemoveListener(toggleUltraButton);
+
     }
 }

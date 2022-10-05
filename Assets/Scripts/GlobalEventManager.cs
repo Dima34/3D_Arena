@@ -179,4 +179,24 @@ public static class GlobalEventManager
             listenerList?.Invoke();
         }
     }
+
+    public static class OnUltraStateChanged
+    {
+        static Action<bool> listenerList;
+
+        public static void AddListener(Action<bool> listener)
+        {
+            listenerList += listener;
+        }
+
+        public static void RemoveListener(Action<bool> listener)
+        {
+            listenerList -= listener;
+        }
+
+        public static void Fire(bool ultraState)
+        {
+            listenerList?.Invoke(ultraState);
+        }
+    }
 }

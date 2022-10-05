@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifeTime: 5
-  _minDamage: 20
-  _maxDamage: 30
+  _minDamage: 30
+  _maxDamage: 50
 --- !u!54 &7904223887108199854
 Rigidbody:
   m_ObjectHideFlags: 0

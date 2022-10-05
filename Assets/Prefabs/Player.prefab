@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6401748564192889618}
   - component: {fileID: 6401748564192889621}
   - component: {fileID: 6401748564192889616}
+  - component: {fileID: 6401748565029129304}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -135,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _maxStrength: 100
-  _initialHealth: 50
+  _initialHealth: 100
   _initialStrength: 50
 --- !u!114 &6401748564192889621
 MonoBehaviour:
@@ -165,10 +166,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 631e49581e0f3a14ebc5835cda216c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fireRate: 140
+  _fireRate: 300
   _bombShellPrefab: {fileID: 5173020495195435002, guid: 09a45cda95fb66b4f9d171c244048436,
     type: 3}
-  _shellSpeed: 20
+  _shellSpeed: 30
+--- !u!114 &6401748565029129304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6401748564192889704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49fa9e02036ba7f458cb8451f50802d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawner: {fileID: 0}
 --- !u!1 &6401748565176197793
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] float _maxHealth = 100f;
-    [SerializeField] float _strengthReward = 50f;
-
-    public float MaxHealth {
-        get{
+    public float StrengthReward { 
+        get {
+            return _strengthReward;
+        } 
+    
+    }
+    public float MaxHealth
+    {
+        get
+        {
             return _maxHealth;
         }
     }
+
+    [SerializeField] float _maxHealth = 100f;
+    [SerializeField] float _strengthReward = 50f;
+
 
     float health;
     

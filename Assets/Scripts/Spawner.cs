@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class Spawner : MonoBehaviour
 {
-    public List<BlueEnemy> BlueEnemiesList { get => blueEnemiesList; }
-    public List<RedEnemy> RedEnemiesList { get => redEnemiesList; }
+    public List<BlueEnemy> BlueEnemiesList { get => blueEnemiesList; set => blueEnemiesList = value; }
+    public List<RedEnemy> RedEnemiesList { get => redEnemiesList; set => redEnemiesList = value; }
 
     [Header("Spawn settings")]
     [SerializeField] float _maxSpawnSpeed = 2f;
