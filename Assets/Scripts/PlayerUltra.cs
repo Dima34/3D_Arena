@@ -9,18 +9,21 @@ public class PlayerUltra : MonoBehaviour
 
     [SerializeField] Spawner _spawner;
 
+
+    GameManager gameManager;
     Player player;
     bool isUltraReady = false;
-    
+
     void OnEnable()
     {
         player = GetComponent<Player>();
         GlobalEventManager.OnStrenghtChange.AddListener(checkUltra);
+        gameManager = GameObject.FindObjectOfType<GameManager>();
     }
 
     void checkUltra(float strenght, float maxStrenght)
     {
-        if(strenght == maxStrenght)
+        if (strenght == maxStrenght)
         {
             setUltra(true);
         }
@@ -36,15 +39,16 @@ public class PlayerUltra : MonoBehaviour
     {
         if (isUltraReady)
         {
-            for(int i = 0; i < _spawner.EnemiesList.Count; i++)
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            gameManager.AddScore(enemies.Length);
+
+
+            for (int i = 0; i < enemies.Length; i++)
             {
-                if (_spawner.EnemiesList[i] != null)
-                {
-                    GlobalEventManager.OnRewardedEnemyDeath.Fire(_spawner.EnemiesList[i], _spawner.EnemiesList[i].StrengthReward);
-                    DestroyObject(_spawner.EnemiesList[i].gameObject);
-                }
+                DestroyObject(enemies[i]);
             }
 
+            _spawner.Clear();
             player.ApplyStrenghtChanges(player.MaxStrenght);
 
             setUltra(false);

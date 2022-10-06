@@ -79,6 +79,13 @@ public class Spawner : MonoBehaviour
         enemiesList.Add(spawnedEnemy);
     }
 
+    public void Clear()
+    {
+        enemiesList = new List<Enemy>();
+        currentBlueAmount = 0;
+        currentRedAmount = 0;
+    }
+
     bool RandomMeshPoint(Vector3 center, float range, out Vector3 result)
     {
         Vector3 randomPoint = center + UnityEngine.Random.insideUnitSphere * range;

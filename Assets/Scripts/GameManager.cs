@@ -27,7 +27,12 @@ public class GameManager : MonoBehaviour
     
     public void OnRewardedEnemyDeath(Enemy enemy, float reward){
         player.ApplyStrenghtChanges(-reward);
-        score++;
+        AddScore(1);
+    }
+
+    public void AddScore(int scoreAmount)
+    {
+        score+= scoreAmount;
         GlobalEventManager.OnScoreChange.Fire(score);
     }
 
