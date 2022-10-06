@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -52,8 +47,6 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1;
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-
     }
 
     private void OnDestroy()

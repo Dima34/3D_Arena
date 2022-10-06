@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float _sensetive;
     [SerializeField] GameObject _headObject;
     [SerializeField] float _verticalCameraLimit = 75f;
+    [SerializeField] Joystick _joystick;
 
     CharacterController characterController;
     float xCameraRotation;
@@ -17,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         setHeadRotation(transform.rotation);
-        lockCoursor();
+        _sensetive /= 1000;
     }
 
     private void Update()
@@ -28,8 +29,8 @@ public class PlayerMovement : MonoBehaviour
 
     void handlePlayerMove()
     {
-        float horizontalAxis = Input.GetAxis("Horizontal");
-        float verticalAxis = Input.GetAxis("Vertical");
+        float horizontalAxis = _joystick.Horizontal;
+        float verticalAxis = _joystick.Vertical;
 
         Vector3 moveVector = (transform.right.normalized * horizontalAxis + transform.forward.normalized * verticalAxis);
         characterController.Move(moveVector * Time.deltaTime * _movementSpeed);
@@ -37,17 +38,25 @@ public class PlayerMovement : MonoBehaviour
 
     void handlePlayerRotate()
     {
-        float mouseX = Input.GetAxis("Mouse X") * _sensetive * Time.deltaTime;
-        float mouseY = -Input.GetAxis("Mouse Y") * _sensetive * Time.deltaTime;
+        foreach (var touch in Input.touches)
+        {
+            // if touch in right side of the screen
+            if (touch.position.x > Screen.width / 2)
+            {
+                Vector2 delta = touch.deltaPosition;
+                float mouseX = delta.x * _sensetive * Time.deltaTime;
+                float mouseY = -delta.y * _sensetive * Time.deltaTime;
 
-        transform.rotation *= Quaternion.EulerAngles(new Vector3(0, mouseX, 0));
+                transform.rotation *= Quaternion.EulerAngles(new Vector3(0, mouseX, 0));
 
-        Quaternion newHeadRotation = _headObject.transform.rotation * Quaternion.EulerAngles(new Vector3(mouseY, 0, 0));
-        Quaternion bodyRotation = transform.rotation;
+                Quaternion newHeadRotation = _headObject.transform.rotation * Quaternion.EulerAngles(new Vector3(mouseY, 0, 0));
+                Quaternion bodyRotation = transform.rotation;
 
-        float verticalDegreeDiff = Quaternion.Angle(newHeadRotation, bodyRotation);
-        if (verticalDegreeDiff <= _verticalCameraLimit)
-            setHeadRotation(newHeadRotation);
+                float verticalDegreeDiff = Quaternion.Angle(newHeadRotation, bodyRotation);
+                if (verticalDegreeDiff <= _verticalCameraLimit)
+                    setHeadRotation(newHeadRotation);
+            }
+        }
     }
 
     void setHeadRotation(Quaternion newRotation)
@@ -55,13 +64,4 @@ public class PlayerMovement : MonoBehaviour
         _headObject.transform.rotation = newRotation;
     }
 
-    void lockCoursor()
-    {
-        Cursor.lockState = CursorLockMode.Confined;
-    }
-
-    private void OnDestroy()
-    {
-
-    }
 }

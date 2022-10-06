@@ -67,7 +67,6 @@ public class GameUI : MonoBehaviour
     void activateEndgameScreen()
     {
         setEndgameKillsText(_killsText.text);
-        Cursor.lockState = CursorLockMode.None;
         OpenEndgame();
     }
 
