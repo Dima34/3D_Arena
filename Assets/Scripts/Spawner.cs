@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class Spawner : MonoBehaviour
 {
@@ -25,21 +24,12 @@ public class Spawner : MonoBehaviour
     float currentRedAmount = 0;
     float currentBlueAmount = 0;
 
-    ObjectPool<Enemy> enemyPool;
-
 
     void Start()
     {
         player = GameObject.FindObjectOfType<Player>();
         StartCoroutine(spawnProcess());
         GlobalEventManager.OnEnemyDeath.AddListener(OnEmenyDeath);
-
-        enemyPool = new ObjectPool<>();
-    }
-
-    Enemy createPooledObjec()
-    {
-        Enemy instance = Instantiate()
     }
 
     IEnumerator spawnProcess()
@@ -91,8 +81,8 @@ public class Spawner : MonoBehaviour
     bool RandomMeshPoint(Vector3 center, float range, out Vector3 result)
     {
         Vector3 randomPoint = center + UnityEngine.Random.insideUnitSphere * range;
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+        UnityEngine.AI.NavMeshHit hit;
+        if (UnityEngine.AI.NavMesh.SamplePosition(randomPoint, out hit, 1.0f, UnityEngine.AI.NavMesh.AllAreas))
         {
             result = hit.position;
             return true;
