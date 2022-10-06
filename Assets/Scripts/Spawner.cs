@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.Pool;
 
 public class Spawner : MonoBehaviour
 {
@@ -25,12 +25,21 @@ public class Spawner : MonoBehaviour
     float currentRedAmount = 0;
     float currentBlueAmount = 0;
 
+    ObjectPool<Enemy> enemyPool;
+
 
     void Start()
     {
         player = GameObject.FindObjectOfType<Player>();
         StartCoroutine(spawnProcess());
         GlobalEventManager.OnEnemyDeath.AddListener(OnEmenyDeath);
+
+        enemyPool = new ObjectPool<>();
+    }
+
+    Enemy createPooledObjec()
+    {
+        Enemy instance = Instantiate()
     }
 
     IEnumerator spawnProcess()

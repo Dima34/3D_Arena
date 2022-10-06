@@ -24,8 +24,7 @@ public abstract class Enemy : MonoBehaviour
     public float StrengthReward { get => _strengthReward; }
     public float MaxHealth { get => _maxHealth; }
 
-    // Start is called before the first frame update
-    protected virtual void Start()
+    public virtual void Init()
     {
         health = _maxHealth;
         player = GameObject.Find("Player").transform;

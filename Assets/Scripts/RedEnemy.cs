@@ -10,17 +10,17 @@ public class RedEnemy : Enemy
     [SerializeField] float _flyUpDistance = 2f;
 
     ObjectFollower objectFollower;
-    Coroutine attackProcess;
     float startBaseOffset;
+    Coroutine flyUpProcess;
 
-    protected override void Start()
+    public override void Init()
     {
-        base.Start();
+        base.Init();
 
         objectFollower = GetComponent<ObjectFollower>();
         startBaseOffset = agent.baseOffset;
 
-        StartCoroutine(flyUp());
+        flyUpProcess = StartCoroutine(flyUp());
     }
 
     protected override void FixedUpdate()
@@ -33,13 +33,10 @@ public class RedEnemy : Enemy
 
     override protected void attackPlayer()
     {
-        if (attackProcess == null)
-        {
-            // stop the enemy
-            agent.SetDestination(transform.position);
-            agent.enabled = false;
-            objectFollower.StartMoving(player.transform);
-        }
+        // stop the enemy
+        agent.SetDestination(transform.position);
+        agent.enabled = false;
+        objectFollower.StartMoving(player.transform);
     }
 
     IEnumerator flyUp()
@@ -51,6 +48,7 @@ public class RedEnemy : Enemy
             yield return null;
         }
 
+        flyUpProcess = null;
         isFliedUp = true;
     }
 
@@ -62,6 +60,14 @@ public class RedEnemy : Enemy
             player.GetComponent<Player>().ApplyHealthChanges(_hitDamage);
             GlobalEventManager.OnEnemyDeath.Fire(this);
             DestroyObject(gameObject);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if(flyUpProcess != null)
+        {
+            StopCoroutine(flyUpProcess);
         }
     }
 }
