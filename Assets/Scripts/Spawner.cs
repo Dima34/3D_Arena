@@ -20,6 +20,7 @@ public class Spawner : MonoBehaviour
     float currentRedAmount = 0;
     float currentBlueAmount = 0;
 
+
     const string RED_ENEMY_TAG = "RedEnemy";
     const string BLUE_ENEMY_TAG = "BlueEnemy";
 
@@ -27,7 +28,7 @@ public class Spawner : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<Player>();
         StartCoroutine(spawnProcess());
-        GlobalEventManager.OnEnemyDeath.AddListener(OnEmenyDeath);
+        GameManager.Current.OnEnemyDeath += OnEmenyDeath;
     }
 
     IEnumerator spawnProcess()
@@ -104,6 +105,6 @@ public class Spawner : MonoBehaviour
 
     private void OnDisable()
     {
-        GlobalEventManager.OnEnemyDeath.RemoveListener(OnEmenyDeath);
+        GameManager.Current.OnEnemyDeath -= OnEmenyDeath;
     }
 }

@@ -115,7 +115,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if (health <= 0)
         {
-            GlobalEventManager.OnRewardedEnemyDeath.Fire(this, _strengthReward);
+            GameManager.Current.OnRewardedEnemyDeath?.Invoke(this, _strengthReward);
             gameObject.SetActive(false);
         }
     }

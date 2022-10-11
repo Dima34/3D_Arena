@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BorderPlayerTeleport : MonoBehaviour
 {
+    public static BorderPlayerTeleport Current;
+    public Action OnOppositeCornerMove;
     Player player;
     Spawner enemySpawner;
+
+    private void Awake() {
+        Current = this;
+    }
 
     private void Start()
     {
@@ -57,9 +64,10 @@ public class BorderPlayerTeleport : MonoBehaviour
             Vector3 oppositeCorner = enemyPosDir.normalized * (transform.localScale.x / 2 - 0.2f);
             oppositeCorner.y = player.transform.position.y;
 
-            GlobalEventManager.OnOppositeCornerMove.Fire();
             player.transform.position = oppositeCorner;
             player.transform.LookAt(transform, player.transform.up);
+            
+            OnOppositeCornerMove?.Invoke();
         }
     }
 

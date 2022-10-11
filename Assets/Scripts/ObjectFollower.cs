@@ -14,7 +14,7 @@ public class ObjectFollower : MonoBehaviour
     public void StartMoving(Transform target)
     {
         moving = StartCoroutine(startMoving(target));
-        GlobalEventManager.OnOppositeCornerMove.AddListener(stopFollowing);
+        BorderPlayerTeleport.Current.OnOppositeCornerMove += stopFollowing;
     }
 
     IEnumerator startMoving(Transform target)
@@ -49,6 +49,6 @@ public class ObjectFollower : MonoBehaviour
 
     private void OnDisable()
     {
-        GlobalEventManager.OnOppositeCornerMove.RemoveListener(stopFollowing);
+        BorderPlayerTeleport.Current.OnOppositeCornerMove -= stopFollowing;
     }
 }

@@ -1,13 +1,30 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System;
+
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Current;
+    public Action<Enemy, float> OnRewardedEnemyDeath;
+    public Action<Enemy> OnEnemyDeath;
+    public Action OnExtraDeath;
+    public Action<int> OnScoreChange;
+    public Action<int> OnScoreInit;
+    public Action OnEndgame;
+
+
     Player player;
     int score;
 
+    private void Awake()
+    {
+        Current = this;
+    }
+
     void Start()
     {
-        ResumeGame();
+        resumeGame();
         player = GameObject.FindObjectOfType<Player>();
         SubscribeListeners();
         initScore();
@@ -16,43 +33,49 @@ public class GameManager : MonoBehaviour
     void initScore()
     {
         score = 0;
-        GlobalEventManager.OnScoreInit.Fire(score);
+        OnScoreInit?.Invoke(score);
     }
 
-    public void SubscribeListeners() {
-        GlobalEventManager.OnRewardedEnemyDeath.AddListener(OnRewardedEnemyDeath);
-        GlobalEventManager.OnExtraDeath.AddListener(OnExtraDeath);
-        GlobalEventManager.OnEndgame.AddListener(PauseGame);
+    public void SubscribeListeners()
+    {
+        OnRewardedEnemyDeath += makeRewardedEnemyDeath;
+        OnExtraDeath += makeExtraDeath;
+        OnEndgame += pauseGame;
     }
-    
-    public void OnRewardedEnemyDeath(Enemy enemy, float reward){
+
+    void makeRewardedEnemyDeath(Enemy enemy, float reward)
+    {
         player.ApplyStrenghtChanges(-reward);
         score++;
-        GlobalEventManager.OnScoreChange.Fire(score);
+        OnScoreChange?.Invoke(score);
     }
 
-    public void OnExtraDeath(){
-        if(player.Health < player.MaxHealth){
+    void makeExtraDeath()
+    {
+        if (player.Health < player.MaxHealth)
+        {
             player.ApplyHealthChanges(-(player.MaxHealth / 2));
-        } else{
+        }
+        else
+        {
             player.ApplyStrenghtChanges(-(player.MaxStrenght / 2));
         }
     }
 
-    public void PauseGame()
+    void pauseGame()
     {
         Time.timeScale = 0;
     }
 
-    public void ResumeGame()
+    void resumeGame()
     {
         Time.timeScale = 1;
     }
 
     private void OnDisable()
     {
-        GlobalEventManager.OnRewardedEnemyDeath.RemoveListener(OnRewardedEnemyDeath);
-        GlobalEventManager.OnExtraDeath.RemoveListener(OnExtraDeath);
-        GlobalEventManager.OnEndgame.RemoveListener(PauseGame);
+        OnRewardedEnemyDeath -= makeRewardedEnemyDeath;
+        OnExtraDeath -= makeExtraDeath;
+        OnEndgame -= pauseGame;
     }
 }

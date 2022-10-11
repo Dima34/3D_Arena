@@ -77,7 +77,7 @@ public class BombShell : MonoBehaviour
         enemy.ApplyHealthChanges(-damage, out remainEnemyHealth);
 
         if(remainEnemyHealth <= 0 && isRebounded){
-            GlobalEventManager.OnExtraDeath.Fire();
+            GameManager.Current.OnExtraDeath?.Invoke();
             gameObject.SetActive(false);
 
             return;

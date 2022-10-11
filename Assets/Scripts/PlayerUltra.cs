@@ -1,21 +1,24 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 
 [RequireComponent(typeof(Player))]
 public class PlayerUltra : MonoBehaviour
 {
     public bool IsUltraReady { get => isUltraReady; }
+    public Action<bool> OnUltraStateChanged;
+
 
     [SerializeField] Spawner _spawner;
-
     Player player;
+
     bool isUltraReady = false;
 
     void OnEnable()
     {
-        player = GetComponent<Player>();
-        GlobalEventManager.OnStrenghtChange.AddListener(checkUltra);
+        player = Player.Current;
+        player.OnStrenghtChange += (checkUltra);
     }
 
     void checkUltra(float strenght, float maxStrenght)
@@ -29,7 +32,7 @@ public class PlayerUltra : MonoBehaviour
     void setUltra(bool state)
     {
         isUltraReady = state;
-        GlobalEventManager.OnUltraStateChanged.Fire(state);
+        OnUltraStateChanged.Invoke(state);
     }
 
     public void UseUltra()
@@ -40,7 +43,7 @@ public class PlayerUltra : MonoBehaviour
 
             foreach (var enemy in activeEnemies)
             {
-                GlobalEventManager.OnRewardedEnemyDeath.Fire(enemy, enemy.StrengthReward);
+                GameManager.Current.OnRewardedEnemyDeath?.Invoke(enemy, enemy.StrengthReward);
                 enemy.gameObject.SetActive(false);
             }
 
@@ -52,6 +55,6 @@ public class PlayerUltra : MonoBehaviour
 
     private void OnDisable()
     {
-        GlobalEventManager.OnStrenghtChange.RemoveListener(checkUltra);
+        player.OnStrenghtChange -= (checkUltra);
     }
 }

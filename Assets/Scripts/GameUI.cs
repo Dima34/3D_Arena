@@ -16,17 +16,19 @@ public class GameUI : MonoBehaviour
     [SerializeField] GameObject _endgameScreen;
     [SerializeField] GameObject _ultraButton;
 
+    PlayerUltra playerUltra;
 
     private void OnEnable()
     {
-        GlobalEventManager.OnScoreChange.AddListener(setKills);
-        GlobalEventManager.OnHealthChange.AddListener(setHP);
-        GlobalEventManager.OnStrenghtChange.AddListener(setStrength);
-        GlobalEventManager.OnEndgame.AddListener(activateEndgameScreen);
-        GlobalEventManager.OnPlayerInit.AddListener(initPlayerValues);
-        GlobalEventManager.OnScoreInit.AddListener(initScore);
-        GlobalEventManager.OnUltraStateChanged.AddListener(toggleUltraButton);
+        GameManager.Current.OnScoreChange += setKills;
+        GameManager.Current.OnEndgame += activateEndgameScreen;
+        GameManager.Current.OnScoreInit += initScore;
+        Player.Current.OnHealthChange += setHP;
+        Player.Current.OnStrenghtChange += setStrength;
+        Player.Current.OnPlayerInit += initPlayerValues;
 
+        playerUltra = Player.Current.GetComponent<PlayerUltra>();
+        playerUltra.OnUltraStateChanged += toggleUltraButton;
     }
 
     private void Update()
@@ -115,13 +117,12 @@ public class GameUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        GlobalEventManager.OnScoreChange.RemoveListener(setKills);
-        GlobalEventManager.OnHealthChange.RemoveListener(setHP);
-        GlobalEventManager.OnStrenghtChange.RemoveListener(setStrength);
-        GlobalEventManager.OnEndgame.RemoveListener(activateEndgameScreen);
-        GlobalEventManager.OnPlayerInit.RemoveListener(initPlayerValues);
-        GlobalEventManager.OnScoreInit.RemoveListener(initScore);
-        GlobalEventManager.OnUltraStateChanged.RemoveListener(toggleUltraButton);
-
+        GameManager.Current.OnScoreChange -= setKills;
+        GameManager.Current.OnEndgame -= activateEndgameScreen;
+        GameManager.Current.OnScoreInit -= initScore;
+        Player.Current.OnHealthChange -= setHP;
+        Player.Current.OnStrenghtChange -= setStrength;
+        Player.Current.OnPlayerInit -= initPlayerValues;
+        playerUltra.OnUltraStateChanged -= toggleUltraButton;
     }
 }
