@@ -67,7 +67,6 @@ public class BombShell : MonoBehaviour
 
     void handleDamage(Collider obj)
     {
-        Debug.Log("Handle damage");
         Enemy enemy = obj.gameObject.GetComponent<Enemy>();
 
         float enemyMaxHealth = enemy.MaxHealth;

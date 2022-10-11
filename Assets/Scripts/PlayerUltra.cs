@@ -15,7 +15,7 @@ public class PlayerUltra : MonoBehaviour
 
     bool isUltraReady = false;
 
-    void OnEnable()
+    void Start()
     {
         player = Player.Current;
         player.OnStrenghtChange += (checkUltra);
@@ -53,7 +53,7 @@ public class PlayerUltra : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         player.OnStrenghtChange -= (checkUltra);
     }

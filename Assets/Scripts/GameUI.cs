@@ -15,19 +15,22 @@ public class GameUI : MonoBehaviour
     [SerializeField] GameObject _pauseScreen;
     [SerializeField] GameObject _endgameScreen;
     [SerializeField] GameObject _ultraButton;
+    [SerializeField] Player _player;
+    [SerializeField] GameManager _gameManager;
 
     PlayerUltra playerUltra;
 
-    private void OnEnable()
-    {
-        GameManager.Current.OnScoreChange += setKills;
-        GameManager.Current.OnEndgame += activateEndgameScreen;
-        GameManager.Current.OnScoreInit += initScore;
-        Player.Current.OnHealthChange += setHP;
-        Player.Current.OnStrenghtChange += setStrength;
-        Player.Current.OnPlayerInit += initPlayerValues;
 
-        playerUltra = Player.Current.GetComponent<PlayerUltra>();
+    private void Awake()
+    {
+        _gameManager.OnScoreChange += setKills;
+        _gameManager.OnEndgame += activateEndgameScreen;
+        _gameManager.OnScoreInit += initScore;
+        _player.OnHealthChange += setHP;
+        _player.OnStrenghtChange += setStrength;
+        _player.OnPlayerInit += initPlayerValues;
+
+        playerUltra = _player.GetComponent<PlayerUltra>();
         playerUltra.OnUltraStateChanged += toggleUltraButton;
     }
 
@@ -117,12 +120,12 @@ public class GameUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.Current.OnScoreChange -= setKills;
-        GameManager.Current.OnEndgame -= activateEndgameScreen;
-        GameManager.Current.OnScoreInit -= initScore;
-        Player.Current.OnHealthChange -= setHP;
-        Player.Current.OnStrenghtChange -= setStrength;
-        Player.Current.OnPlayerInit -= initPlayerValues;
+        _gameManager.OnScoreChange -= setKills;
+        _gameManager.OnEndgame -= activateEndgameScreen;
+        _gameManager.OnScoreInit -= initScore;
+        _player.OnHealthChange -= setHP;
+        _player.OnStrenghtChange -= setStrength;
+        _player.OnPlayerInit -= initPlayerValues;
         playerUltra.OnUltraStateChanged -= toggleUltraButton;
     }
 }

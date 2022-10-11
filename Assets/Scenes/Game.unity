@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2316,6 +2316,8 @@ MonoBehaviour:
   _pauseScreen: {fileID: 1727612927}
   _endgameScreen: {fileID: 448968230}
   _ultraButton: {fileID: 292060297}
+  _player: {fileID: 6401748565029129309}
+  _gameManager: {fileID: 75161059}
 --- !u!1 &554009814
 GameObject:
   m_ObjectHideFlags: 0
@@ -6644,5 +6646,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 631e49581e0f3a14ebc5835cda216c31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6401748565029129309 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6401748564192889618, guid: 5d61b636594f8fe4eb64a0f5cb3ad557,
+    type: 3}
+  m_PrefabInstance: {fileID: 6401748565029129302}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907675e3e4b7d394697c4ad4c1174637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

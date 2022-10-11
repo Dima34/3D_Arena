@@ -18,10 +18,6 @@ public class Player : MonoBehaviour
     [SerializeField] float _initialHealth = 100f;
     [SerializeField] float _initialStrength = 50f;
 
-    private void Awake() {
-        Current = this;
-    }
-
     public float Health
     {
         get { return health; }
@@ -45,7 +41,10 @@ public class Player : MonoBehaviour
     float health = 0;
     float strength = 0;
 
-    // Start is called before the first frame update
+    private void Awake() {
+        Current = this;
+    }
+
     void Start()
     {
         // Check if initial > max
