@@ -15,17 +15,17 @@ public class BorderPlayerTeleport : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
             List<Vector3> enemiesPositions = new List<Vector3>();
 
-            List<Enemy> enemiesList = enemySpawner.EnemiesList;
+            List<Enemy> enemiesList = Utils.GetActiveEnemies();
             
 
             // Get all enemy positions
             foreach (var enemy in enemiesList)
             {
-                if(enemy != null)
+                if (enemy != null)
                     enemiesPositions.Add(enemy.transform.position);
             }
 
@@ -51,7 +51,7 @@ public class BorderPlayerTeleport : MonoBehaviour
             {
                 avaregeEnemyPos = new Vector3(1, player.transform.position.y, 1);
             }
-            
+
 
             Vector3 enemyPosDir = transform.position - avaregeEnemyPos;
             Vector3 oppositeCorner = enemyPosDir.normalized * (transform.localScale.x / 2 - 0.2f);
@@ -60,6 +60,8 @@ public class BorderPlayerTeleport : MonoBehaviour
             GlobalEventManager.OnOppositeCornerMove.Fire();
             player.transform.position = oppositeCorner;
             player.transform.LookAt(transform, player.transform.up);
-        }        
+        }
     }
+
+    
 }

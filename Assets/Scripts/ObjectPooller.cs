@@ -15,7 +15,7 @@ public class ObjectPooller : MonoBehaviour
     [SerializeField] List<PoollerItem> itemsToPull = new List<PoollerItem>();
     public List<GameObject> pool;
     [HideInInspector]
-    public ObjectPooller Current;
+    public static ObjectPooller Current;
 
     private void Awake()
     {
