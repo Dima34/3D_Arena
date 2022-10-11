@@ -37,8 +37,14 @@ public class BlueEnemy : Enemy
     void spawnBullet()
     {
         Vector3 spawnPos = transform.position + transform.forward * transform.localScale.z;
-        ObjectFollower bullet = Instantiate(_enemyBulletObject, spawnPos, transform.rotation);
-        bullet.StartMoving(player);
+
+        GameObject bulletObject = ObjectPooller.Current.GetPooledObject("EnemyShell");
+        bulletObject.transform.position = spawnPos;
+        bulletObject.transform.rotation = transform.rotation;
+        bulletObject.SetActive(true);
+
+        ObjectFollower objectFollower = bulletObject.GetComponent<ObjectFollower>();
+        objectFollower.StartMoving(player);
     }
     
 }

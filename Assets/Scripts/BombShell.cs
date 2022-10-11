@@ -48,7 +48,7 @@ public class BombShell : MonoBehaviour
     IEnumerator timerForDestroy()
     {
         yield return new WaitForSeconds(_lifeTime);
-        DestroyObject(gameObject);
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,18 +56,18 @@ public class BombShell : MonoBehaviour
         string tag = other.tag;
 
         if (tag == "TeleportZone") return;
-        if (tag != "Enemy")
+        if (tag != "BlueEnemy" && tag != "RedEnemy")
         {
-            DestroyObject(gameObject);
+            gameObject.SetActive(false);
             return;
         }
-
 
         handleDamage(other);
     }
 
     void handleDamage(Collider obj)
     {
+        Debug.Log("Handle damage");
         Enemy enemy = obj.gameObject.GetComponent<Enemy>();
 
         float enemyMaxHealth = enemy.MaxHealth;
@@ -78,7 +78,8 @@ public class BombShell : MonoBehaviour
 
         if(remainEnemyHealth <= 0 && isRebounded){
             GlobalEventManager.OnExtraDeath.Fire();
-            DestroyObject(gameObject);
+            gameObject.SetActive(false);
+
             return;
         }
 
@@ -107,7 +108,7 @@ public class BombShell : MonoBehaviour
         }
         else
         {
-            DestroyObject(gameObject);
+            gameObject.SetActive(false);
         }
     }
 

@@ -24,6 +24,10 @@ public abstract class Enemy : MonoBehaviour
     public float StrengthReward { get => _strengthReward; }
     public float MaxHealth { get => _maxHealth; }
 
+    private void OnEnable() {
+        Init();
+    }
+
     public virtual void Init()
     {
         health = _maxHealth;
@@ -112,7 +116,7 @@ public abstract class Enemy : MonoBehaviour
         if (health <= 0)
         {
             GlobalEventManager.OnRewardedEnemyDeath.Fire(this, _strengthReward);
-            DestroyObject(gameObject);
+            gameObject.SetActive(false);
         }
     }
 

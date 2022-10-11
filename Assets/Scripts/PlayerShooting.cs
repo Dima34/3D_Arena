@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] float _fireRate = 20f;
-    [SerializeField] BombShell _bombShellPrefab;
     [SerializeField] float _shellSpeed = 10f;
 
     
@@ -24,8 +23,13 @@ public class PlayerShooting : MonoBehaviour
         Camera mainCamera = Camera.main;
         Vector3 spawnPosition = mainCamera.transform.position + mainCamera.transform.forward.normalized / 10;
 
-        BombShell shell = Instantiate(_bombShellPrefab, spawnPosition, mainCamera.transform.rotation);
-        shell.MoveInDirection(mainCamera.transform.forward, _shellSpeed);
+        GameObject shellObject = ObjectPooller.Current.GetPooledObject("PlayerShell");
+        shellObject.transform.position = spawnPosition;
+        shellObject.transform.rotation = mainCamera.transform.rotation;
+        shellObject.SetActive(true);
+
+        BombShell shellScript = shellObject.GetComponent<BombShell>();
+        shellScript.MoveInDirection(mainCamera.transform.forward, _shellSpeed);
 
         yield return new WaitForSeconds(100 / _fireRate);
         shootProcess = null;

@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         GlobalEventManager.OnRewardedEnemyDeath.RemoveListener(OnRewardedEnemyDeath);
         GlobalEventManager.OnExtraDeath.RemoveListener(OnExtraDeath);

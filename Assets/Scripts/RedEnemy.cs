@@ -59,12 +59,13 @@ public class RedEnemy : Enemy
         {
             player.GetComponent<Player>().ApplyHealthChanges(_hitDamage);
             GlobalEventManager.OnEnemyDeath.Fire(this);
-            DestroyObject(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
     private void OnDisable()
     {
+        agent.enabled = true;
         if(flyUpProcess != null)
         {
             StopCoroutine(flyUpProcess);

@@ -13,11 +13,11 @@ public class EnemyBullet : MonoBehaviour
             Player player = other.gameObject.GetComponent<Player>();
             player.ApplyStrenghtChanges(strengthDamage);
 
-            DestroyObject(gameObject);
+            gameObject.SetActive(false);
         }
         else if (other.tag == "PlayerShell")
         {
-            DestroyObject(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

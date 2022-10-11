@@ -44,10 +44,10 @@ public class ObjectFollower : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        DestroyObject(gameObject);
+        gameObject.SetActive(false);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         GlobalEventManager.OnOppositeCornerMove.RemoveListener(stopFollowing);
     }
