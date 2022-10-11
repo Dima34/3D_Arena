@@ -4,9 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
   - TeleportZone
   - PlayerShell
+  - BlueEnemy
+  - RedEnemy
+  - EnemyShell
   layers:
   - Default
   - TransparentFX
